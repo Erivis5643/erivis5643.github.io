@@ -767,7 +767,7 @@ fullscreenButtonEl.addEventListener("click", async () => {
     } else {
       await document.exitFullscreen();
     }
-  } catch {
+  } catch (error) {
     // Browser can reject fullscreen if not allowed.
   }
 });
