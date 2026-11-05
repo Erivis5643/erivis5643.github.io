@@ -18,6 +18,7 @@ create table if not exists public.workout_plans (
   steps jsonb not null default '[]'::jsonb check (jsonb_typeof(steps) = 'array'),
   visibility text not null default 'private' check (visibility in ('private', 'public')),
   is_saved boolean not null default false,
+  source_label text not null default '',
   created_at timestamptz not null default now(),
   completed_at timestamptz,
   scheduled_for date
@@ -27,6 +28,7 @@ alter table public.workout_plans add column if not exists folder text not null d
 alter table public.workout_plans add column if not exists category text not null default 'Other';
 update public.workout_plans set category = coalesce(nullif(folder, 'Unsorted'), 'Other') where category = 'Other';
 alter table public.workout_plans add column if not exists scheduled_for date;
+alter table public.workout_plans add column if not exists source_label text not null default '';
 
 create index if not exists workout_plans_owner_created_idx on public.workout_plans (user_id, created_at desc);
 create index if not exists workout_plans_public_created_idx on public.workout_plans (created_at desc) where visibility = 'public';
@@ -58,10 +60,12 @@ create table if not exists public.workout_shares (
   workout_id uuid references public.workout_plans(id) on delete set null,
   sender_id uuid not null references auth.users(id) on delete cascade,
   recipient_id uuid not null references auth.users(id) on delete cascade,
+  sender_label text not null default '',
   workout_snapshot jsonb not null check (jsonb_typeof(workout_snapshot) = 'object'),
   shared_at timestamptz not null default now()
 );
 create index if not exists workout_shares_recipient_idx on public.workout_shares (recipient_id, shared_at desc);
+alter table public.workout_shares add column if not exists sender_label text not null default '';
 
 -- Each completed run is a separate event, so repeated sessions retain their dates.
 create table if not exists public.workout_completions (

@@ -49,7 +49,7 @@
 
         <section id="view-library" class="view">
           <div class="page-heading"><h1>My workouts</h1></div>
-          <div id="libraryTabs" class="segmented-control"><button class="is-active" data-library="history">History</button><button data-library="saved">All Saved Workouts</button><button data-library="received">Received</button></div>
+          <div id="libraryTabs" class="segmented-control"><button class="is-active" data-library="history">History</button><button data-library="saved">All Saved Workouts</button><button data-library="received">Received <span id="receivedBadge" class="notification-badge hidden" aria-label="Unread received workouts"></span></button></div><div id="receivedTools" class="received-tools hidden"><button id="importAIWeekButton" class="button button-outline" type="button">Import HERMES AI week</button><input id="aiWeekFileInput" class="hidden" type="file" accept="application/json,.json" /><p class="status-line">Import a weekly JSON plan to add each workout to its scheduled date.</p></div>
           <div id="libraryGrid" class="card-grid"></div>
         </section>
         <section id="view-calendar" class="view"><div class="page-heading"><h1>Calendar</h1></div><div id="calendarList" class="calendar-list"></div></section>
@@ -72,6 +72,7 @@
     </div>
 
     <dialog id="authDialog" class="dialog-card"><form method="dialog" class="dialog-close-form"><button class="icon-button" aria-label="Close">×</button></form><p class="eyebrow">SIGN IN</p><h2>Account access</h2><p class="panel-copy">Create an account with your email and a password, or sign in to your existing account.</p><label class="field-label" for="authEmail">Email</label><input id="authEmail" class="text-field" type="email" autocomplete="email" placeholder="you@example.com" /><label class="field-label" for="authPassword">Password</label><input id="authPassword" class="text-field" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters" /><button id="signInButton" class="button button-primary button-wide" type="button">Sign in</button><button id="signUpButton" class="button button-quiet button-wide" type="button">Create account</button><button id="signOutButton" class="button button-quiet button-wide hidden" type="button">Sign out</button><p id="authStatus" class="status-line" aria-live="polite"></p></dialog>
+    <dialog id="shareDialog" class="dialog-card share-dialog"><form method="dialog" class="dialog-close-form"><button class="icon-button" aria-label="Close">×</button></form><p class="eyebrow">SEND WORKOUT</p><h2>Choose a person</h2><p class="panel-copy" id="shareWorkoutTitle">Select who should receive this workout.</p><div class="search-bar share-search"><span aria-hidden="true">⌕</span><input id="shareSearchInput" type="search" placeholder="Search by username or bio" aria-label="Search users to share with" autocomplete="off" /></div><div id="shareSearchResults" class="share-search-results"></div><p id="shareSelection" class="status-line" aria-live="polite">Choose a user to continue.</p><button id="confirmShareButton" class="button button-primary button-wide" type="button" disabled>Send workout</button></dialog>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </body>
 </html>
